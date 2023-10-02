@@ -92,4 +92,10 @@ public class AuthController {
         return new ResponseEntity<>("User registered success with Cashier",
                 HttpStatus.OK);
     }
+    @GetMapping("connected/see")
+    public String seeUser()
+    {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return authentication.getName();
+    }
 }
