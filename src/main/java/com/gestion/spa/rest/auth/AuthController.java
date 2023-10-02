@@ -18,7 +18,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-
+import javax.servlet.http.HttpServletRequest;
 import java.util.Collections;
 @RestController
 @RequestMapping("api/v1/auth")
@@ -93,9 +93,10 @@ public class AuthController {
                 HttpStatus.OK);
     }
     @GetMapping("connected/see")
-    public String seeUser()
+    public String seeUser(HttpServletRequest request)
     {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return authentication.getName();
+        //Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        //return authentication.getName();
+        return request.getUserPrincipal().getName();
     }
 }
