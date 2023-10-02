@@ -93,10 +93,10 @@ public class AuthController {
                 HttpStatus.OK);
     }
     @GetMapping("connected/see")
-    public String seeUser(HttpServletRequest request)
+    public String seeUser()
     {
-        //Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        //return authentication.getName();
-        return request.getUserPrincipal().getName();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return authentication.getName();
+        
     }
 }
