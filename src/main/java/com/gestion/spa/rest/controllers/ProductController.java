@@ -40,8 +40,11 @@ public class ProductController {
 
            return product;
         }
+        else{
+            return "user not logged in";
+        }
 
-         return null;
+    
 
     }
     @GetMapping("all")
