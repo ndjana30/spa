@@ -73,22 +73,24 @@ public class FacturationController {
     }
     @GetMapping("{client_id}/see/{date}")
     public Facturation SeeFacturationPerDate(
-            @PathVariable long client_id, @PathVariable @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate date)
+            @PathVariable long client_id, @PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date)
     {
-        Optional<Client> client = clientRepository.findById(client_id);
-        if(client.isPresent())
-        {
-            for(Facturation fac:client.get().getFacturationList())
-            {
-                if(fac.getDateTime().isEqual(date) && fac.getClient_id() == client_id)
-                {
-                        return fac;
-                }
-                else {
-                    return null;
-                }
-            }
-        }
-        return null;
+        Client client = clientRepository.findById(client_id).get();
+        Facturation facturation = new Facturation();
+        List<Double> costs = new ArrayList<>();
+         for(Product p: client.getProductList())
+         {
+             if (p.getDateTime().equals(date))
+             {
+                 facturation.getProducts().add(p);
+                 costs.add(p.getCost());
+             }
+             
+         }
+        Double sum = costs.stream().reduce(0.0, Double::sum);
+         facturation.setTotal(sum);
+         facturation.setClient_id(client_id);
+          return facturation;
+
     }
 }
