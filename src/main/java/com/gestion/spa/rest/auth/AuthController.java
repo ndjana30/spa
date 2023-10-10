@@ -118,4 +118,15 @@ public ResponseEntity<AuthResponseDto> chashierLogin(@RequestBody LoginDto login
         return authentication.getName();
         
     }
+    
+    @GetMapping("user/get")
+    public Boolean getCurrentUser()
+    {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if(auth.getName() .equals("anonymousUser"))
+        {
+            return false;
+        }
+        return true;
+    }
 }
