@@ -39,6 +39,25 @@ public class AuthController {
         this.passwordEncoder = passwordEncoder;
         this.jwtGenerator=jwtGenerator;
     }
+
+    @PostMapping("cashier/login")
+public ResponseEntity<AuthResponseDto> chashierLogin(@RequestBody LoginDto loginDto)
+{
+    Authentication authentication = authenticationManager.authenticate(
+            new UsernamePasswordAuthenticationToken
+                    (loginDto.getUsername(), loginDto.getPassword()));
+    SecurityContextHolder.getContext().setAuthentication(authentication);
+    Authentication usr = SecurityContextHolder.getContext().getAuthentication();
+    Role role=roleRepository.findByName("CASHIER").get();
+    if(usr.getAuthorities().toArray()[0].toString() .equals(role.getName()))
+    {
+        String token = jwtGenerator.generateToken(authentication);
+        return new ResponseEntity<>(new AuthResponseDto(token), HttpStatus.OK);
+    }
+    return null;
+
+}
+    
     @PostMapping("employee/login")
     public ResponseEntity<AuthResponseDto> login(@RequestBody LoginDto loginDto)
     {
