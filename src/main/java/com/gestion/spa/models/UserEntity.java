@@ -2,7 +2,7 @@ package com.gestion.spa.models;
 
 
 import javax.persistence.*;
-
+import javax.validation.constraints.Size;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jdk.jfr.BooleanFlag;
 import lombok.Data;
@@ -23,6 +23,7 @@ public class UserEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @Column(nullable = false)
+    @Size(min=3,message="username too short")
     private String username;
     @Column(nullable = false)
     private String password;
