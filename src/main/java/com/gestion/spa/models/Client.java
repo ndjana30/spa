@@ -3,7 +3,7 @@ package com.gestion.spa.models;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
+import javax.validation.constraints.Size;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -19,6 +19,7 @@ public class Client implements Serializable {
     @Id
     @GeneratedValue
     private long id;
+    @Size(min = 3,message = "client name is too small")
     private String name;
     private String randomized;
     @OneToMany(mappedBy = "client",cascade = CascadeType.DETACH)
